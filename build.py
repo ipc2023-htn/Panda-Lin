@@ -16,6 +16,18 @@ def setup():
     except CalledProcessError:
         exit(-1)
     cwd = os.getcwd()
+    linearizerDir = os.path.join(
+            cwd, "linearizer")
+    cmdForMakingLinearizer = [
+            "make",
+            "-C",
+            linearizerDir]
+    _ = subprocess.run(
+            cmdForMakingLinearizer)
+    try:
+        _.check_returncode()
+    except CalledProcessError:
+        exit(-1)
     parserDir = os.path.join(
             cwd, "pandaPIparser")
     cmdForMakingParser = [
