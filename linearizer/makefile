@@ -49,4 +49,4 @@ clean:
 	rm src/hddl-token.cpp
 	rm src/hddl.cpp
 	rm src/hddl.hpp
-	rm src/*o
+	rm src/*.o
