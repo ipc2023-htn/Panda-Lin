@@ -3,6 +3,18 @@ import subprocess
 from subprocess import CalledProcessError
     
 def setup():
+    cmdForSubmodule = [
+            "git",
+            "submodule",
+            "update",
+            "--init",
+            "--recursive"]
+    _ = subprocess.run(
+            cmdForSubmodule)
+    try:
+        _.check_returncode()
+    except CalledProcessError:
+        exit(-1)
     cwd = os.getcwd()
     parserDir = os.path.join(
             cwd, "pandaPIparser")
