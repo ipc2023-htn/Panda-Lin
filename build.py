@@ -86,7 +86,7 @@ def setup():
             "-DCMAKE_BUILD_TYPE=Release",
             "-S",
             cmakeListsFile,
-            "-D",
+            "-B",
             engineBuildDir]
     _ = subprocess.run(cmdCMakeForEngine)
     try:
