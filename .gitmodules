@@ -1,3 +1,12 @@
 [submodule "HyperTensioN"]
 	path = HyperTensioN
 	url = https://github.com/Maumagnaguagno/HyperTensioN.git
+[submodule "pandaPIparser"]
+	path = pandaPIparser
+	url = https://github.com/panda-planner-dev/pandaPIparser.git
+[submodule "pandaPIgrounder"]
+	path = pandaPIgrounder
+	url = https://github.com/panda-planner-dev/pandaPIgrounder.git
+[submodule "pandaPIengine"]
+	path = pandaPIengine
+	url = https://github.com/panda-planner-dev/pandaPIengine.git
