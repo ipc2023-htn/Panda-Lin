@@ -56,10 +56,13 @@ def setup():
         _.check_returncode()
     except CalledProcessError:
         exit(-1)
+    grounderMakefilePath = os.path.join(
+            grounderDir,
+            "src")
     cmdForMakingGrounder = [
             "make",
             "-C",
-            grounderDir]
+            grounderMakefilePath]
     _ = subprocess.run(
             cmdForMakingGrounder)
     try:
