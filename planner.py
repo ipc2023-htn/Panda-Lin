@@ -32,9 +32,10 @@ class Planner:
         self._logger.error(
                 msg, exc_info=True)
 
-    def plan(self, 
-             domainFile : str, 
-             taskFile : str) -> None:
+    def __runLinearizer(
+            self,
+            domainFile : str,
+            taskFile : str) -> None:
         cmdLinearizing = [
                 self._linearizer,
                 domainFile,
@@ -49,6 +50,12 @@ class Planner:
             proc.check_returncode()
         except subprocess.CalledProcessError:
             self.__log(proc)
+            exit(-1)
+    
+    def __runHype(
+            self,
+            domainFile : str,
+            taskFile : str) -> None:
         hypeExtensions = [
                 "dejavu",
                 "typredicate",
@@ -60,16 +67,95 @@ class Planner:
                 "domain-out.hddl",
                 "task-out.hddl"]
         cmdSolving += hypeExtensions
-        proc = subprocess.run(cmdSolving,
-                              text=True,
-                              capture_output=True)
+        proc = subprocess.run(
+                cmdSolving,
+                text=True,
+                capture_output=True)
+        if proc.returncode:
+            self.__log(proc)
+            self.__runPANDA(
+                    domainFile, taskFile)
+            return
+        with open("output", "w") as o:
+            o.write(proc.stdout)
+        
+        
+    
+    def __runPANDA(
+            self,
+            domainFile : str,
+            taskFile : str) -> CompletedProcess:
+        cwd = os.getcwd()
+        parser = os.path.join(
+                cwd,
+                "pandaPIparser",
+                "pandaPIparser")
+        parsingOutFile = os.path.join(
+                cwd, "parsing-out")
+        cmdParsing = [
+                parser,
+                domainFile,
+                taskFile,
+                parsingOutFile]
+        proc = subprocess.run(
+                cmdParsing,
+                text=True,
+                capture_output=True)
         try:
             proc.check_returncode()
         except subprocess.CalledProcessError:
             self.__log(proc)
-            return
+            exit(-1)
+        grounder = os.path.join(
+                cwd,
+                "pandaPIgrounder",
+                "pandaPIgrounder")
+        groundingOutFile = os.path.join(
+                cwd,
+                "grounding-out")
+        cmdGrounding = [
+                grounder,
+                parsingOutFile,
+                groundingOutFile]
+        proc = subprocess.run(
+                cmdGrounding,
+                text=True,
+                capture_output=True)
+        try:
+            proc.check_returncode()
+        except subprocess.CalledProcessError:
+            self.__log(proc)
+            exit(-1) 
+        engine = os.path.join(
+                cwd,
+                "pandaPIengine",
+                "build",
+                "pandaPIengine")
+        cmdSolving = [
+                engine,
+                "-w",
+                "2",
+                groundingOutFile]
+        proc = subprocess.run(
+                cmdSolving,
+                text=True,
+                capture_output=True)
+        try:
+            proc.check_returncode()
+        except subprocess.CalledProcessError:
+            self.__log(proc)
+            exit(-1)
         with open("output", "w") as o:
             o.write(proc.stdout)
+        
+
+    def plan(self, 
+             domainFile : str, 
+             taskFile : str) -> None:
+        self.__runLinearizer(
+                domainFile, taskFile)
+        self.__runHype(
+                domainFile, taskFile)
 
 if __name__ == "__main__":
     args = options.setup()
