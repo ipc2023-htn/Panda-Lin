@@ -1,0 +1,4 @@
+*.log
+output
+*.hddl
+__pycache__
