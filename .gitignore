@@ -2,3 +2,4 @@
 output
 *.hddl
 __pycache__
+*-out
