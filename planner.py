@@ -12,10 +12,11 @@ class Planner:
                 cwd,
                 "linearizer",
                 "linearizer")
-        self._hype = os.path.join(
+        self._lilotane = os.path.join(
                 cwd,
-                "HyperTensioN",
-                "Hype.rb")
+                "lilotane",
+                "build",
+                "lilotane")
         if os.path.exists("error.log"):
             subprocess.run(["rm", "error.log"])
         logFormat = "{asctime:s}\n- {message:s}"
@@ -51,22 +52,15 @@ class Planner:
         except subprocess.CalledProcessError:
             self.__log(proc)
             exit(-1)
-    
-    def __runHype(
+    def __runLilotane(
             self,
             domainFile : str,
-            taskFile : str) -> None:
-        hypeExtensions = [
-                "dejavu",
-                "typredicate",
-                "pullup",
-                "run"]
+            taskFile : str) ->None:
         cmdSolving = [
-                "ruby",
-                self._hype,
-                "domain-out.hddl",
-                "task-out.hddl"]
-        cmdSolving += hypeExtensions
+                self._lilotane,
+                domainFile,
+                taskFile,
+                "-cs"]
         proc = subprocess.run(
                 cmdSolving,
                 text=True,
@@ -78,8 +72,6 @@ class Planner:
             return
         with open("output", "w") as o:
             o.write(proc.stdout)
-        
-        
     
     def __runPANDA(
             self,
@@ -154,7 +146,7 @@ class Planner:
              taskFile : str) -> None:
         self.__runLinearizer(
                 domainFile, taskFile)
-        self.__runHype(
+        self.__runLilotane(
                 domainFile, taskFile)
 
 if __name__ == "__main__":

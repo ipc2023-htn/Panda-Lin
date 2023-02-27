@@ -114,6 +114,31 @@ def setup():
         _.check_returncode()
     except CalledProcessError:
         exit(-1)
+    lilotaneDir = os.path.join(
+            cwd, "lilotane")
+    lilotaneBuildDir = os.path.join(
+            lilotaneDir, "build")
+    if not os.path.exists(lilotaneBuildDir):
+        os.mkdir(lilotaneBuildDir)
+    cmdCMakeLilotane = [
+            "cmake",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DIPASIRSOLVER=glucose4",
+            "-S", lilotaneDir,
+            "-B", lilotaneBuildDir]
+    _ = subprocess.run(cmdCMakeLilotane)
+    try:
+        _.check_returncode()
+    except CalledProcessError:
+        exit(-1)
+    cmdMakingLilotant = [
+            "make", "-C",
+            lilotaneBuildDir]
+    _ = subprocess.run(cmdMakingLilotant)
+    try:
+        _.check_returncode()
+    except CalledProcessError:
+        exit(-1)
 
 if __name__ == "__main__":
     setup()
