@@ -52,6 +52,16 @@ class Planner:
         except subprocess.CalledProcessError:
             self.__log(proc)
             exit(-1)
+
+    def __checkLilotaneResults(
+            self, 
+            proc : CompletedProcess) -> bool:
+        outs = proc.stdout.split("\n")
+        for i in range(len(outs) - 1, -1, -1):
+            if "Unsolvable" in outs[i]:
+                return False
+        return True
+
     def __runLilotane(
             self,
             domainFile : str,
@@ -60,12 +70,13 @@ class Planner:
                 self._lilotane,
                 domainFile,
                 taskFile,
-                "-cs"]
+                "-cs",
+                "-co=0"]
         proc = subprocess.run(
                 cmdSolving,
                 text=True,
                 capture_output=True)
-        if proc.returncode:
+        if not self.__checkLilotaneResults(proc):
             self.__log(proc)
             self.__runPANDA(
                     domainFile, taskFile)
