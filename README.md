@@ -4,13 +4,11 @@ This is the participant $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}
 ### Compiling the Code
 The instructions for compiling the code is identical to those for PANDA, i.e.,
 ```
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ../src
+python build.py
 ```
 ### Running the Code
 ```
-./pandaPIengine --config configuration_index
+python planner.py --domain path_to_domain.hddl --task path_to_task.hddl
 ```
 
 ## Overview of All Known Participants
