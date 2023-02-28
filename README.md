@@ -1,5 +1,5 @@
-# Participant: $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Effs/Precs}}$
-This is the participant $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Effs/Precs}}$. 
+# Participant: $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Precs/Effs}}$
+This is the participant $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Precs/Effs}}$. 
 
 Ying Xian Wu \<yingxian.wu@anu.edu.au\>, Songtuan Lin \<songtuan.lin@anu.edu.au\>, Pascal Bercher \<pascal.bercher@anu.edu.au\>
 
@@ -22,40 +22,40 @@ https://docs.google.com/spreadsheets/d/1SekZKjNuVmWJgy_UxavCPydoqVcYevxCrwu3eQBx
 
 ### PO-agile Track, Participants:
 
-- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Effs/Precs}}$
-  * Configuration 1 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Effs/Precs}}$:
+- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Precs/Effs}}$
+  * Configuration 1 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Precs/Effs}}$:
     + Linearizer: simple inference
     + Search engine: greedy-A* + RC(Add)
-  * Configuration 2 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Effs/Precs}}$:
+  * Configuration 2 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Precs/Effs}}$:
     + Linearizer: complex inference
     + Search engine: greedy-A* + RC(Add)
-  * Configuration 3 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Effs/Precs}}$
+  * Configuration 3 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Precs/Effs}}$
     + Linearizer: complex inference
     + Search engine: greedy-A* + RC(FF)
-- $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Effs/Precs}}$
-  * Configuration 1 -- $\text{Lifted-Lin}_{\text{Lilotane}}^{\text{Simple-Effs/Precs}}$
-  * Configuration 2 -- $\text{Lifted-Lin}_{\text{Lifted-PANDA}}^{\text{Simple-Effs/Precs}}$
+- $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Precs/Effs}}$
+  * Configuration 1 -- $\text{Lifted-Lin}_{\text{Lilotane}}^{\text{Simple-Precs/Effs}}$
+  * Configuration 2 -- $\text{Lifted-Lin}_{\text{Lifted-PANDA}}^{\text{Simple-Precs/Effs}}$
 
 
 ### PO-satisficing Track, Participants:
 
-- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Effs/Precs}}$
-  * Configuration 1 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Effs/Precs}}$:
+- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Precs/Effs}}$
+  * Configuration 1 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Precs/Effs}}$:
     + Linearizer: simple inference
     + Search engine: greedy-A* + RC(Add), then greedy-A* + RC(FF), then A* + RC(LM-cut)) 
-  * Configuration 2 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Effs/Precs}}$:
+  * Configuration 2 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Precs/Effs}}$:
     + Linearizer: simple inference
     + Search engine: A* + RC(LM-cut)
-  * Configuration 3 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Effs/Precs}}$ 
+  * Configuration 3 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Precs/Effs}}$ 
     + Linearizer: complex inference
     + Search engine: A* + RC(LM-cut)
-- $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Effs/Precs}}$
-  * Configuration 1: $\text{Lifted-Lin}_{\text{Lilotane}}^{\text{Simple-Effs/Precs}}$
-  * Configuration 2: $\text{Lifted-Lin}_{\text{Lifted-PANDA}}^{\text{Simple-Effs/Precs}}$
+- $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Precs/Effs}}$
+  * Configuration 1: $\text{Lifted-Lin}_{\text{Lilotane}}^{\text{Simple-Precs/Effs}}$
+  * Configuration 2: $\text{Lifted-Lin}_{\text{Lifted-PANDA}}^{\text{Simple-Precs/Effs}}$
 
 ## Participants
 
-### Participant 1 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Effs/Precs}}$:
+### Participant 1 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Precs/Effs}}$:
 
 This participant consists of an inner planner and an outer one, both of which are built upon the PANDA search engine. There are three configurations for this participant each of which corresponds to a setting for the inner planner.
 
@@ -92,7 +92,7 @@ This participant consists of an inner planner and an outer one, both of which ar
     * Visited list: default 
     * The outer planner will only be called if the inner planner fails to find a solution
 
-### Participant 2 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Effs/Precs}}$:
+### Participant 2 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Precs/Effs}}$:
 This participant again consists of an inner planner and an outer one. There are also three configurations for this participant each of which corresponds to a setting for the inner planner.
 
 **Inner Planner**:
@@ -142,7 +142,7 @@ This participant again consists of an inner planner and an outer one. There are 
 
     
     
-### Participant 3 -- $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Effs/Precs}}$:
+### Participant 3 -- $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Precs/Effs}}$:
 This participant again consists of an inner planner and an outer one. There are two configurations for it each of which selects a different search engine for the inner planner.
 
 **Inner planner**:
