@@ -1,1 +1,1 @@
-# Panda-Lin
+# Grounded linear
