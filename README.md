@@ -1,6 +1,8 @@
 # Participant: $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Effs/Precs}}$
 This is the participant $\text{Lifted-Lin}_{\text{\\{Lilotane, Lifted-PANDA\\}}}^{\text{Simple-Effs/Precs}}$. 
 
+Ying Xian Wu \<yingxian.wu@anu.edu.au\>, Songtuan Lin \<songtuan.lin@anu.edu.au\>, Pascal Bercher \<pascal.bercher@anu.edu.au\>
+
 ### Compiling the Code
 The instructions for compiling the code is identical to those for PANDA, i.e.,
 ```
