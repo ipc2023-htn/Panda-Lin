@@ -5,7 +5,7 @@
 # Summary of Participating Planners
 
 ## PO-agile Track (Evaluated In Terms of the Normal IPC Score)
-$\text{Agi-Grounded-Lin}^{\text{Complex-Precs/Effs}}_{\text{Lookahead}}$
+$\text{Grounded-Lin}^{\text{Complex-Precs/Effs}}_{\text{Lookahead}}$
 
 + Configuration 1:
     * Linearizer with the complex inference approach
@@ -20,10 +20,17 @@ $\text{Agi-Grounded-Lin}^{\text{Complex-Precs/Effs}}_{\text{Lookahead}}$
 + Configuration 3:
     * Linearizer with the complex inference approach
     * Engine: pandaPI with lookahead
-        + Heuristic: rc2(add)
-        + Search algorithm: weighted A* with $w = 2$
+        + First-round search:
+            * Heuristic: rc2(add)
+            * Search algorithm: GBFS
+        + Second-round search:
+            * Heuristic: rc2(ff)
+            * Search algorithm: weighted A* with $w=2$
+        + Thrid-round search:
+            * Heuristic: rc2(lmcut)
+            * Search algorithm: A* (optimal search)
 
-$\text{Agi-Grounded-Lin}^{\text{Simple-Precs/Effs}}_{\text{PANDA}}$
+$\text{Grounded-Lin}^{\text{Simple-Precs/Effs}}_{\text{PANDA}}$
 
 + Configuration 1:
     * Linearizer with the simple inference approach
@@ -38,19 +45,6 @@ $\text{Agi-Grounded-Lin}^{\text{Simple-Precs/Effs}}_{\text{PANDA}}$
 + Configuration 3:
     * Linearizer with the simple inference approach
     * Engine: pandaPI without lookahead
-        + Heuristic: rc2(add)
-        + Search algorithm: weighted A* with $w = 2$
-
-
-$\text{Lifted-Lin}^{\text{Simple-Precs/Effs}}_{\text{Lilotane}}$ -- Only one configuration
-
-## PO-satisficing Track (Evaluated In Terms of the Cost of a Found Solution):
-
-$\text{Sat-Grounded-Lin}^{\text{Complex-Precs/Effs}}_{\text{Lookahead}}$
-
-+ Configuration 1:
-    * Linearizer with the complex inference approach
-    * Engine: pandaPI with lookahead
         + First-round search:
             * Heuristic: rc2(add)
             * Search algorithm: GBFS
@@ -58,91 +52,19 @@ $\text{Sat-Grounded-Lin}^{\text{Complex-Precs/Effs}}_{\text{Lookahead}}$
             * Heuristic: rc2(ff)
             * Search algorithm: weighted A* with $w=2$
         + Thrid-round search:
-            * Heuristic: rc2(ff)
-            * Search algorithm: weighted A* with $w=1.5$
-+ Configuration 2:
-    * Linearizer with the complex inference approach
-    * Engine: pandaPI with lookahead
-        + First-round search:
-            * Heurisitc: rc2(ff)
-            * Search algorithm: weighted A* with $w=2$
-        + Second-round search:
-            * Heuristic: rc2(ff)
-            * Search algorithm: weighted A* with $w=1.5$
-        + Third-round search:
             * Heuristic: rc2(lmcut)
-            * Search algorithm: A* (cost-optimal search)
-+ Configuration 3:
-    * Linearizer with the complex inference approach
-    * Engine: pandaPI with lookahead
-        + Heuristic: rc2(lmcut)
-        * Search algorithm: A* (cost-optimal search)
+            * Search algorithm: A* (optimal search)
 
-
-$\text{Sat-Grounded-Lin}^{\text{Simple-Precs/Effs}}_{\text{PANDA}}$
-
-+ Configuration 1:
-    * Linearizer with the simple inference approach
-    * Engine: pandaPI without lookahead
-        + First-round search:
-            * Heuristic: rc2(add)
-            * Search algorithm: GBFS
-        + Second-round search:
-            * Heuristic: rc2(ff)
-            * Search algorithm: weighted A* with $w=2$
-        + Thrid-round search:
-            * Heuristic: rc2(ff)
-            * Search algorithm: weighted A* with $w=1.5$
-+ Configuration 2:
-    * Linearizer with the simple inference approach
-    * Engine: pandaPI without lookahead
-        + First-round search:
-            * Heurisitc: rc2(ff)
-            * Search algorithm: weighted A* with $w=2$
-        + Second-round search:
-            * Heuristic: rc2(ff)
-            * Search algorithm: weighted A* with $w=1.5$
-        + Third-round search:
-            * Heuristic: rc2(lmcut)
-            * Search algorithm: A* (cost-optimal search)
-+ Configuration 3:
-    * Linearizer with the simple inference approach
-    * Engine: pandaPI without lookahead
-        + Heuristic: rc2(lmcut)
-        * Search algorithm: A* (cost-optimal search)
-
-$\text{Lifted-Lin}^{\text{Simple-Precs/Effs}}_{\text{Lilotane}}$ -- Only one configuration
-
-# Participation Information (A Short Summary)
-
-## PO-agile Track (Evaluated In Terms of the Normal IPC Score), Participanting Planners:
-
-- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Precs/Effs}}$
-  * Configuration 1 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Precs/Effs}}$:
-    + Linearizer: complex inference
-    + pandaPI (with look ahead): GBFS + RC(Add)
-  * Configuration 2 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Precs/Effs}}$:
-    + Linearizer: complex inference
-    + pandaPI (with lookahead): GBFS + RC(Add)
-  * Configuration 3 -- $\text{Agi-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Precs/Effs}}$
-    + Linearizer: simple inference
-    + pandaPI (no look ahead): GBFS + RC(Add)
-- $\text{Lifted-Lin}_{\text{Lilotane}}^{\text{Simple-Precs/Effs}}$ -- Only one configuration
-
-
-## PO-satisficing Track (Evaluated In Terms of the Cost of a Solution Found), Participating Planners:
-
-- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{\\{Complex, Simple\\}-Precs/Effs}}$
-  * Configuration 1 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Precs/Effs}}$:
-    + Linearizer: complex inference
-    + pandaPI (with look ahead): GBFS + RC(Add), then greedy-A* (w=2) + RC(FF), then greedy-A* (w=1.5) + RC(FF) 
-  * Configuration 2 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Complex-Precs/Effs}}$:
-    + Linearizer: complex inference
-    + pandaPI (with look ahead): greedy-A* (w = 2) + RC(FF), then greedy-A* (w=1.5) + RC(FF), then A* + RC(LM-cut)
-  * Configuration 3 -- $\text{Sat-Grounded-Lin}_{\text{PANDA}}^{\text{Simple-Precs/Effs}}$ 
-    + Linearizer: simple inference
-    + pandaPI (no look ahead): A* + RC(LM-cut)
-- $\text{Lifted-Lin}_{\text{Lilotane}}^{\text{Simple-Precs/Effs}}$ -- Only one configuration
+$\text{Lifted-Lin}^{\text{Simple-Precs/Effs}}$
+  * Configuration 1:
+    + Lifted linearizer
+    + Search engine: Lilotane
+  * Configuration 2:
+    + Lifted linearizer
+    + Search engine: pandaPI with SAT
+  * Configuration 3:
+    + Lifted linearizer
+    + Search engine: pandaPI with SAT (optimal version) 
 
 # Participanting Planners (Details):
 
