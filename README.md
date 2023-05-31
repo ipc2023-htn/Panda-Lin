@@ -4,7 +4,6 @@
 
 # Summary of Participating Planners
 
-## PO-agile Track (Evaluated In Terms of the Normal IPC Score)
 $\text{Grounded-Lin}^{\text{Complex-Precs/Effs}}_{\text{Lookahead}}$
 
 + Configuration 1:
