@@ -1,0 +1,77 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%files
+	## This copies all files in this repository into the container.
+	## If you do so, please remove all files not needed to run the planner
+	## (e.g. source-code, testing or debugging planning problems) from the container
+	## to decrease its size as much as possible.
+	./planner /planner	
+
+%setup
+	## The "%setup"-part of this script is called to bootstrap an empty
+	## container.
+
+%post
+	## The "%post"-part of this script is called after the container has
+	## been created with the "%setup"-part above and runs "inside the
+	## container". Most importantly, it is used to install dependencies
+	## and build the planner. Add all commands that have to be executed
+	## once before the planner runs in this part of the script.
+	
+	## Install all necessary dependencies.
+	apt-get update
+	apt-get -y install make g++ git flex bison gengetopt zip cmake
+	## Install the parser
+	git clone https://github.com/panda-planner-dev/pandaPIparser.git
+	cd pandaPIparser
+	make
+	cd ..
+	## Install the grounder
+	git clone https://github.com/panda-planner-dev/pandaPIgrounder.git
+	cd pandaPIgrounder
+	git submodule init
+	git submodule update
+	cd cpddl
+	make boruvka opts bliss lpsolve
+	make
+	cd ../src
+	make
+	cd ../../
+
+	## go to directory and make the planner
+	cd planner
+	mkdir build
+	cd build
+	cmake -DCMAKE_BUILD_TYPE=Release ../src
+	make
+	cd ../../
+	
+	## remove files not needed to execute the planner
+
+%runscript
+	## The runscript is called whenever the container is used to solve
+	## an instance.
+	
+	## DOMAINFILE and PROBLEMFILE contain the HDDL input files.
+	DOMAINFILE=$1
+	PROBLEMFILE=$2
+	## PLANFILE is the name of the file to which your planner should write the plan it found.
+	PLANFILE=$3
+
+	## run your planner here
+	/pandaPIparser/pandaPIparser ${DOMAINFILE} ${PROBLEMFILE} task.htn
+	/pandaPIgrounder/pandaPIgrounder task.htn task.sas
+	/planner/build/pandaPIengine --config 2 --output ${PLANFILE} task.sas 
+
+## Update the following fields with meta data about your submission.
+## Please use the same field names and use only one line for each value.
+%labels
+Name        grounded-linear-agile
+Description 
+Authors     Ying Xian Wu <yingxian.wu@anu.edu.au> and Conny Olz <conny.olz@uni-ulm.de> and Songtuan Lin <songtuan.lin@anu.edu.au> and Pascal Bercher <pascal.bercher@anu.edu.au>
+SupportsRecursion yes
+SupportsTotalOrder no
+SupportsPartialOrder yes
+SupportsAgilePlanning yes
+SupportsOptimalPlanning no
