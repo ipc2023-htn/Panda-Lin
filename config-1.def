@@ -97,3 +97,9 @@ SupportsTotalOrder no
 SupportsPartialOrder yes
 SupportsAgilePlanning yes
 SupportsOptimalPlanning no
+Track-TO-agile no
+Track-TO-satisficing no
+Track-TO-optimal no
+Track-PO-agile yes
+Track-PO-satisficing no
+Track-PO-optimal no
