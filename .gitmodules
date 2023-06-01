@@ -1,9 +1,0 @@
-[submodule "pandaPIparser"]
-	path = pandaPIparser
-	url = https://github.com/panda-planner-dev/pandaPIparser.git
-[submodule "pandaPIgrounder"]
-	path = pandaPIgrounder
-	url = https://github.com/panda-planner-dev/pandaPIgrounder.git
-[submodule "lilotane"]
-	path = lilotane
-	url = https://github.com/domschrei/lilotane.git
