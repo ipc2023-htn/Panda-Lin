@@ -16,6 +16,6 @@ def setup():
             "--cache", required=True,
             help="path to store intermediate files")
     argparser.add_argument(
-            "--config", required=True, 
+            "--config", type=int, required=True, 
             help="configuration to be used")
     return argparser.parse_args()
