@@ -22,7 +22,14 @@ From: ubuntu:22.04
 	## Install all necessary dependencies.
 	apt-get update
 	apt-get install python3 -y
-	apt-get -y install make g++ git flex bison gengetopt zip cmake
+	apt-get -y install make g++ git flex bison gengetopt zip wget
+	wget https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4.tar.gz
+	tar -xzf cmake-3.26.4.tar.gz
+	cd cmake-3.26.4
+	./bootstrap
+	make
+	make install
+
 
 	# Install the SAT solver
 	git clone https://github.com/msoos/cryptominisat.git
@@ -38,8 +45,30 @@ From: ubuntu:22.04
 
 	## go to directory and make the planner
 	cd planner
-	python3 build.py
+	## Install the parser
+	git clone https://github.com/panda-planner-dev/pandaPIparser.git
+	cd pandaPIparser
+	make
 	cd ..
+	## Install the grounder
+	git clone https://github.com/panda-planner-dev/pandaPIgrounder.git
+	cd pandaPIgrounder
+	git submodule init
+	git submodule update
+	cd cpddl
+	make boruvka opts bliss lpsolve
+	make
+	cd ../src
+	make
+	cd ../../
+	## Install lilotane
+	git clone https://github.com/domschrei/lilotane.git
+	cd lilotane
+	mkdir build
+	cd build
+	cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DIPASIRSOLVER=glucose4
+	make
+	cd ../../
 	
 	## remove files not needed to execute the planner
 

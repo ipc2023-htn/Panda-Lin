@@ -6,7 +6,7 @@ From: ubuntu:22.04
 	## If you do so, please remove all files not needed to run the planner
 	## (e.g. source-code, testing or debugging planning problems) from the container
 	## to decrease its size as much as possible.
-	./planner /planner	
+	. /planner	
 
 %setup
 	## The "%setup"-part of this script is called to bootstrap an empty
@@ -21,7 +21,24 @@ From: ubuntu:22.04
 	
 	## Install all necessary dependencies.
 	apt-get update
+	apt-get install python3 -y
 	apt-get -y install make g++ git flex bison gengetopt zip cmake
+
+
+	# Install the SAT solver
+	git clone https://github.com/msoos/cryptominisat.git
+	cd cryptominisat
+	mkdir build
+	cd build
+	cmake -DIPASIR=ON ..
+	make
+	make install
+	ldconfig
+	cd ../../
+
+
+	## go to directory and make the planner
+	cd planner
 	## Install the parser
 	git clone https://github.com/panda-planner-dev/pandaPIparser.git
 	cd pandaPIparser
@@ -38,14 +55,17 @@ From: ubuntu:22.04
 	cd ../src
 	make
 	cd ../../
-
-	## go to directory and make the planner
-	cd planner
+	## Build linearizer
+	cd linearizer
+	make
+	cd ../
+	cd pandaPIengine
 	mkdir build
 	cd build
-	cmake -DCMAKE_BUILD_TYPE=Release ../src
+	cmake -DCMAKE_BUILD_TYPE=Release -DSAT=ON ../src
 	make
 	cd ../../
+	## Install lilotane
 	
 	## remove files not needed to execute the planner
 
@@ -60,9 +80,7 @@ From: ubuntu:22.04
 	PLANFILE=$3
 
 	## run your planner here
-	/pandaPIparser/pandaPIparser ${DOMAINFILE} ${PROBLEMFILE} task.htn
-	/pandaPIgrounder/pandaPIgrounder task.htn task.sas
-	/planner/build/pandaPIengine --config 3 -t 1780 --output ${PLANFILE} task.sas 
+	python3 /planner/planner.py --cache ./ --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE} --config 3
 
 ## Update the following fields with meta data about your submission.
 ## Please use the same field names and use only one line for each value.
