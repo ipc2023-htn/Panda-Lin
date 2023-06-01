@@ -76,18 +76,14 @@ class Planner:
                 cmdSolving,
                 text=True,
                 capture_output=True)
-        if not self.__checkLilotaneResults(proc):
-            self.__log(proc)
-            self.__runPANDA(
-                    domainFile, taskFile)
-            return
-        with open("output", "w") as o:
-            o.write(proc.stdout)
+        return proc
     
     def __runPANDA(
             self,
             domainFile : str,
-            taskFile : str) -> CompletedProcess:
+            taskFile : str,
+            output : str,
+            optimality : bool) -> CompletedProcess:
         cwd = os.getcwd()
         parser = os.path.join(
                 cwd,
@@ -134,11 +130,17 @@ class Planner:
                 "pandaPIengine",
                 "build",
                 "pandaPIengine")
-        cmdSolving = [
-                engine,
-                "-w",
-                "2",
-                groundingOutFile]
+        if optimality:
+            cmdSolving = [
+                    engine,
+                    "-s",
+                    "--optimality",
+                    groundingOutFile]
+        else:
+            cmdSolving = [
+                    engine, 
+                    "-s", 
+                    groundingOutFile]
         proc = subprocess.run(
                 cmdSolving,
                 text=True,
@@ -148,20 +150,43 @@ class Planner:
         except subprocess.CalledProcessError:
             self.__log(proc)
             exit(-1)
-        with open("output", "w") as o:
-            o.write(proc.stdout)
+        with open(output, "w") as o:
+            started = False
+            lines = proc.stdout.split("\n")
+            for line in lines:
+                if "Print Output Plan" in line:
+                    started = True
+                if started:
+                    o.write(line + "\n")
         
 
     def plan(self, 
              domainFile : str, 
-             taskFile : str) -> None:
+             taskFile : str,
+             output : str,
+             config : int) -> None:
         self.__runLinearizer(
                 domainFile, taskFile)
-        self.__runLilotane(
-                domainFile, taskFile)
+        if config == 1:
+            proc = self.__runLilotane(
+                "domain-out.hddl", 
+                "task-out.hddl")
+            if not self.__checkLilotaneResults(proc):
+                self.__runPANDA(domainFile, taskFile, output)
+            else:
+                with open(output, "w") as f:
+                    f.write(proc.stdout)
+        elif config == 2:
+            proc = self.__runPANDA(
+                "domain-out.hddl", 
+                "task-out.hddl", False)
+        elif config == 3:
+            proc = self.__runPANDA("domain-out.hddl", "task-out.hddl", True)
 
 if __name__ == "__main__":
     args = options.setup()
     planner = Planner()
     planner.plan(args.domain, 
-                 args.task)
+                 args.task,
+                 args.output,
+                 args.config)

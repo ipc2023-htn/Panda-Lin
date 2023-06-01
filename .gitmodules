@@ -4,9 +4,6 @@
 [submodule "pandaPIgrounder"]
 	path = pandaPIgrounder
 	url = https://github.com/panda-planner-dev/pandaPIgrounder.git
-[submodule "pandaPIengine"]
-	path = pandaPIengine
-	url = https://github.com/panda-planner-dev/pandaPIengine.git
 [submodule "lilotane"]
 	path = lilotane
 	url = https://github.com/domschrei/lilotane.git

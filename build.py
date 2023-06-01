@@ -96,6 +96,7 @@ def setup():
     cmdCMakeForEngine = [
             "cmake", 
             "-DCMAKE_BUILD_TYPE=Release",
+            "-DSAT=ON",
             "-S",
             cmakeListsFile,
             "-B",

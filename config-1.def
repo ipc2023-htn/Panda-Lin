@@ -6,7 +6,7 @@ From: ubuntu:22.04
 	## If you do so, please remove all files not needed to run the planner
 	## (e.g. source-code, testing or debugging planning problems) from the container
 	## to decrease its size as much as possible.
-	./planner /planner	
+	. /planner	
 
 %setup
 	## The "%setup"-part of this script is called to bootstrap an empty
@@ -21,31 +21,25 @@ From: ubuntu:22.04
 	
 	## Install all necessary dependencies.
 	apt-get update
+	apt-get install python3 -y
 	apt-get -y install make g++ git flex bison gengetopt zip cmake
-	## Install the parser
-	git clone https://github.com/panda-planner-dev/pandaPIparser.git
-	cd pandaPIparser
+
+	# Install the SAT solver
+	git clone https://github.com/msoos/cryptominisat.git
+	cd cryptominisat
+	mkdir build
+	cd build
+	cmake -DIPASIR=ON ..
 	make
-	cd ..
-	## Install the grounder
-	git clone https://github.com/panda-planner-dev/pandaPIgrounder.git
-	cd pandaPIgrounder
-	git submodule init
-	git submodule update
-	cd cpddl
-	make boruvka opts bliss lpsolve
-	make
-	cd ../src
-	make
+	make install
+	ldconfig
 	cd ../../
+
 
 	## go to directory and make the planner
 	cd planner
-	mkdir build
-	cd build
-	cmake -DCMAKE_BUILD_TYPE=Release ../src
-	make
-	cd ../../
+	python3 build.py
+	cd ..
 	
 	## remove files not needed to execute the planner
 
@@ -60,9 +54,8 @@ From: ubuntu:22.04
 	PLANFILE=$3
 
 	## run your planner here
-	/pandaPIparser/pandaPIparser ${DOMAINFILE} ${PROBLEMFILE} task.htn
-	/pandaPIgrounder/pandaPIgrounder task.htn task.sas
-	/planner/build/pandaPIengine --config 1 --output ${PLANFILE} task.sas 
+	cd planner
+	python3 planner.py --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE} --config 1
 
 ## Update the following fields with meta data about your submission.
 ## Please use the same field names and use only one line for each value.
