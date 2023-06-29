@@ -62,7 +62,7 @@ int printSolution(void * solver, Model * htn, PDT* pdt, MatchingData & matching)
 	int currentID = 0;
 	int solutionCost = 0;
 	
-	cout << "Print Output Plan:" << endl;
+	cout << "==>" << endl;
 	/// extract the primitive plan
 	
 	if (htn->isTotallyOrdered){

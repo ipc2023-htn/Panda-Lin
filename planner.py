@@ -160,7 +160,7 @@ class Planner:
             started = False
             lines = proc.stdout.split("\n")
             for line in lines:
-                if "Print Output Plan" in line:
+                if "==>" in line:
                     started = True
                 if started:
                     o.write(line + "\n")
