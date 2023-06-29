@@ -62,7 +62,7 @@ int printSolution(void * solver, Model * htn, PDT* pdt, MatchingData & matching)
 	int currentID = 0;
 	int solutionCost = 0;
 	
-	cout << "Print Output Plan:" << endl;
+	cout << "==>" << endl;
 	/// extract the primitive plan
 	
 	if (htn->isTotallyOrdered){
@@ -73,7 +73,7 @@ int printSolution(void * solver, Model * htn, PDT* pdt, MatchingData & matching)
 				if (ipasir_val(solver,prim) > 0){
 					assert(leaf->outputID == -1);
 					leaf->outputID = currentID++;
-					std::cout << htn->taskNames[leaf->possiblePrimitives[pIndex]] << endl;
+					std::cout << leaf->outputID << " " << htn->taskNames[leaf->possiblePrimitives[pIndex]] << endl;
 					solutionCost += htn->actionCosts[leaf->possiblePrimitives[pIndex]];
 #ifndef NDEBUG
 					cout << "Assigning " << leaf->outputID << " to atom " << prim << endl;
@@ -97,7 +97,7 @@ int printSolution(void * solver, Model * htn, PDT* pdt, MatchingData & matching)
 								&& matching.leafSOG->leafOfNode[l]->outputTask == prim){
 							// get the output number of that leaf
 							PDT * leaf = matching.leafSOG->leafOfNode[l];
-							std::cout << htn->taskNames[prim] << endl;
+							std::cout << leaf->outputID << " " << htn->taskNames[prim] << endl;
 							// cout << "PUP" << endl;
 						}
 					}
@@ -108,11 +108,11 @@ int printSolution(void * solver, Model * htn, PDT* pdt, MatchingData & matching)
 	}
 	
 		
-	// cout << "root " << pdt->outputID << endl;
+	cout << "root " << pdt->outputID << endl;
 
-	// // out decompositions
-	// pdt->printDecomposition(htn);
-	// cout << "<==" << endl;
+	// out decompositions
+	pdt->printDecomposition(htn);
+	cout << "<==" << endl;
 	// cout << "Total cost of solution: " << solutionCost << endl;
 	return solutionCost;
 }

@@ -80,7 +80,8 @@ From: ubuntu:22.04
 	PLANFILE=$3
 
 	## run your planner here
-	python3 /planner/planner.py --cache ./ --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE} --config 3
+	python3 /planner/planner.py --cache ./ --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE}.i --config 3
+	pandaPIparser/pandaPIparser -c ${PLANFILE}.i ${PLANFILE}
 
 ## Update the following fields with meta data about your submission.
 ## Please use the same field names and use only one line for each value.
