@@ -81,6 +81,9 @@ From: ubuntu:22.04
 
 	## run your planner here
 	python3 /planner/planner.py --cache ./ --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE}.i --config 2
+	sed -i 's/US_/_/g' ${PLANFILE}.i
+	sed -i 's/M_/-/g' ${PLANFILE}.i
+	sed -i 's/MINUS_/-/g' ${PLANFILE}.i
 	/planner/pandaPIparser/pandaPIparser -c ${PLANFILE}.i ${PLANFILE}
 
 ## Update the following fields with meta data about your submission.
