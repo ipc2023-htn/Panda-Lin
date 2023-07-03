@@ -18,22 +18,6 @@ class Planner:
                 "build",
                 "lilotane")
         self.__cache = cache
-        logFile = os.path.join(self.__cache, "log")
-        if os.path.exists(logFile):
-            subprocess.run(["rm", logFile])
-        logFormat = "{asctime:s}\n- {message:s}"
-        logging.basicConfig(
-                filename=logFile,
-                format=logFormat,
-                style="{")
-        self._logger = logging.getLogger(__name__)
-    
-    def __log(self, 
-              proc : CompletedProcess) -> None:
-        msg = (proc.stdout + "\n- "
-               + proc.stderr + "\n- ")
-        self._logger.error(
-                msg, exc_info=True)
 
     def __runLinearizer(
             self,
@@ -56,7 +40,6 @@ class Planner:
         try:
             proc.check_returncode()
         except subprocess.CalledProcessError:
-            self.__log(proc)
             exit(-1)
         return (outDomain, outTask)
 
@@ -109,7 +92,6 @@ class Planner:
         try:
             proc.check_returncode()
         except subprocess.CalledProcessError:
-            self.__log(proc)
             exit(-1)
         grounder = os.path.join(
                 os.path.dirname(__file__),
@@ -129,7 +111,6 @@ class Planner:
         try:
             proc.check_returncode()
         except subprocess.CalledProcessError:
-            self.__log(proc)
             exit(-1) 
         engine = os.path.join(
                 os.path.dirname(__file__),
@@ -154,7 +135,6 @@ class Planner:
         try:
             proc.check_returncode()
         except subprocess.CalledProcessError:
-            self.__log(proc)
             exit(-1)
         with open(output, "w") as o:
             started = False
@@ -181,7 +161,13 @@ class Planner:
                 self.__runPANDA(domainFile, taskFile, output, False)
             else:
                 with open(output, "w") as f:
-                    f.write(proc.stdout)
+                    started = False
+                    lines = proc.stdout.split("\n")
+                    for line in lines:
+                        if "==>" in line:
+                            started = True
+                        if started:
+                            f.write(line + "\n")
         elif config == 2:
             proc = self.__runPANDA(
                 domain, 

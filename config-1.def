@@ -22,13 +22,8 @@ From: ubuntu:22.04
 	## Install all necessary dependencies.
 	apt-get update
 	apt-get install python3 -y
-	apt-get -y install make g++ git flex bison gengetopt zip wget
-	wget https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4.tar.gz
-	tar -xzf cmake-3.26.4.tar.gz
-	cd cmake-3.26.4
-	./bootstrap
-	make
-	make install
+	apt-get -y install make git g++ g++-9 flex bison gengetopt zip wget libssl-dev libz-dev cmake
+
 
 
 	# Install the SAT solver
@@ -61,12 +56,16 @@ From: ubuntu:22.04
 	cd ../src
 	make
 	cd ../../
+	## Build the linearizer
+	cd linearizer
+	make
+	cd ../
 	## Install lilotane
 	git clone https://github.com/domschrei/lilotane.git
 	cd lilotane
 	mkdir build
 	cd build
-	cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DIPASIRSOLVER=glucose4
+	cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DIPASIRSOLVER=glucose4 -DCMAKE_CXX_COMPILER=g++-9
 	make
 	cd ../../
 	
@@ -83,8 +82,19 @@ From: ubuntu:22.04
 	PLANFILE=$3
 
 	## run your planner here
-	cd planner
-	python3 planner.py --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE} --config 1
+	python3 /planner/planner.py --cache ./ --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE}.i --config 1
+	sed -i 's/LA_/</g' ${PLANFILE}.i
+	sed -i 's/RA_/>/g' ${PLANFILE}.i
+	sed -i 's/LB_/[/g' ${PLANFILE}.i
+	sed -i 's/RB_/]/g' ${PLANFILE}.i
+	sed -i 's/BAR_/|/g' ${PLANFILE}.i
+	sed -i 's/SEM_/;/g' ${PLANFILE}.i
+	sed -i 's/COM_/,/g' ${PLANFILE}.i
+	sed -i 's/PLUS_/+/g' ${PLANFILE}.i
+	sed -i 's/MINUS_/-/g' ${PLANFILE}.i
+	sed -i 's/EXCLAMATION_/!/g' ${PLANFILE}.i
+	sed -i 's/US_/_/g' ${PLANFILE}.i
+	/planner/pandaPIparser/pandaPIparser -c ${PLANFILE}.i ${PLANFILE}
 
 ## Update the following fields with meta data about your submission.
 ## Please use the same field names and use only one line for each value.
