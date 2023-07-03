@@ -22,13 +22,8 @@ From: ubuntu:22.04
 	## Install all necessary dependencies.
 	apt-get update
 	apt-get install python3 -y
-	apt-get -y install make g++ git flex bison gengetopt zip wget
-	wget https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4.tar.gz
-	tar -xzf cmake-3.26.4.tar.gz
-	cd cmake-3.26.4
-	./bootstrap
-	make
-	make install
+	apt-get -y install make git g++ g++-9 flex bison gengetopt zip wget libssl-dev cmake
+
 
 
 	# Install the SAT solver
@@ -66,7 +61,7 @@ From: ubuntu:22.04
 	cd lilotane
 	mkdir build
 	cd build
-	cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DIPASIRSOLVER=glucose4
+	cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DIPASIRSOLVER=glucose4 -DCMAKE_CXX_COMPILER=g++-9
 	make
 	cd ../../
 	
@@ -84,7 +79,8 @@ From: ubuntu:22.04
 
 	## run your planner here
 	cd planner
-	python3 planner.py --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE} --config 1
+	python3 planner.py --domain ${DOMAINFILE} --task ${PROBLEMFILE} --output ${PLANFILE}.i --config 1
+	planner/pandaPIparser/pandaPIparser -c ${PLANFILE}.i ${PLANFILE}
 
 ## Update the following fields with meta data about your submission.
 ## Please use the same field names and use only one line for each value.
