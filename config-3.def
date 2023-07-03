@@ -92,7 +92,7 @@ From: ubuntu:22.04
 	sed -i 's/MINUS_/-/g' ${PLANFILE}.i
 	sed -i 's/EXCLAMATION_/!/g' ${PLANFILE}.i
 	sed -i 's/US_/_/g' ${PLANFILE}.i
-	pandaPIparser/pandaPIparser -c ${PLANFILE}.i ${PLANFILE}
+	/planner/pandaPIparser/pandaPIparser -c ${PLANFILE}.i ${PLANFILE}
 
 ## Update the following fields with meta data about your submission.
 ## Please use the same field names and use only one line for each value.
