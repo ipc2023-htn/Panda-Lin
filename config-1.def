@@ -63,6 +63,8 @@ From: ubuntu:22.04
 	## Install lilotane
 	git clone https://gitlab.anu.edu.au/u1092535/htn2020-competitor-1 lilotane
 	cd lilotane
+	sed -i 's,#include <utility>,#include <utility>\n#include <limits>,g' src/util/robin_hood.h
+	
 	mkdir build
 	make
 	cp lilotane build/
