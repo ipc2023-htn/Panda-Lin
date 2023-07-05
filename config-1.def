@@ -61,12 +61,13 @@ From: ubuntu:22.04
 	make
 	cd ../
 	## Install lilotane
-	git clone https://gitlab.anu.edu.au/u1092535/htn2020-competitor-1 lilotane
+	git clone https://github.com/domschrei/lilotane.git
 	cd lilotane
 	mkdir build
+	cd build
+	cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DIPASIRSOLVER=glucose4 -DCMAKE_CXX_COMPILER=g++-9
 	make
-	cp lilotane build/
-	cd ../
+	cd ../../
 	
 	## remove files not needed to execute the planner
 
